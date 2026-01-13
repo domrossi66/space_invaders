@@ -26,7 +26,6 @@ void Lazer::Update()
         if(position.y > GetScreenHeight() || position.y < 0)
         {
             active = false;
-            std::cout << "Lazer is inactive" << std::endl;
         }
     }
 }

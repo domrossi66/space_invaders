@@ -5,7 +5,7 @@ int main()
 {
     int windowWidth = 750;
     int windowHeight = 700;
-    Color gray = {29, 29, 29, 255}; //Red, blue, green, opacity
+    Color background = {29, 29, 29, 255}; //Red, blue, green, opacity (this is gray rn)
 
     InitWindow(windowWidth, windowHeight, "Space Invaders Project");
     
@@ -18,7 +18,7 @@ int main()
         game.HandleInput();
         game.Update();
         BeginDrawing();
-        ClearBackground(gray);  // Make the background our gray
+        ClearBackground(background);  // Make the background our desired color
         game.Draw();
         EndDrawing();
     }

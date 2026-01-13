@@ -3,7 +3,7 @@
 
 Game::Game()
 {
-
+    shields = CreateShields();
 }
 
 Game::~Game()
@@ -19,7 +19,6 @@ void Game::Update()
     }
 
     DeleteInactiveLazers();
-    std::cout << "Vector size: " << spaceship.lazers.size() << std::endl;   // Test above method works
 }
 
 void Game::Draw()
@@ -29,6 +28,11 @@ void Game::Draw()
     for(auto& lazer: spaceship.lazers)
     {
         lazer.Draw();
+    }
+
+    for(auto& shield: shields)
+    {
+        shield.Draw();
     }
 }
 
@@ -63,4 +67,16 @@ void Game::DeleteInactiveLazers()
             ++i;
         }
     }
+}
+
+std::vector<Shield> Game::CreateShields()
+{
+    int shieldWidth = Shield::grid[0].size() * 3;   // Total columns is number of spaces in first row
+    float gap = (GetScreenWidth() - (4 * shieldWidth)) / 5; // 5 gaps in screen, each size of space left over from screen size - 4 shields
+    for(int i = 0; i < 4; i++)
+    {
+        float offsetX = (i + 1) * gap + i * shieldWidth;    // Horizontal position with equal spacing
+        shields.push_back(Shield({offsetX, float(GetScreenHeight() - 100)}));   // Draw 4 shields evenly spaced and above the ship
+    }
+    return shields;
 }
