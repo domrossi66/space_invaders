@@ -24,12 +24,12 @@ Shield::Shield(Vector2 position)
     // Iterate through the grid
     for(unsigned int row = 0; row < grid.size(); ++row)
     {
-        for(unsigned int column = 0; column < grid[0].size(); ++column)
+        for(unsigned int col = 0; col < grid[0].size(); ++col)
         {
-            if(grid[row][column] == 1)  // Creates a block at each 1, turning it yellow
+            if(grid[row][col] == 1)  // Creates a block at each 1, turning it yellow
             {
                 // Each block is 3x3 pixels so we multiply 
-                float pos_x = position.x + column * 3;
+                float pos_x = position.x + col * 3;
                 float pos_y = position.y + row * 3;
                 Block block = Block({pos_x, pos_y});    // Create a new block at the position
                 blocks.push_back(block);

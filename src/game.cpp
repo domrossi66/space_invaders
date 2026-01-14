@@ -4,10 +4,14 @@
 Game::Game()
 {
     shields = CreateShields();
+    aliens = CreateAliens();
+    aliensDirection = 1;
+    lastAlienFire = 0;
 }
 
 Game::~Game()
 {
+    Alien::UnloadImages();
 
 }
 
@@ -18,6 +22,12 @@ void Game::Update()
         lazer.Update();
     }
 
+    MoveAliens();
+    AlienShoot();
+    for(auto& lazer: alienLazers)
+    {
+        lazer.Update();
+    }
     DeleteInactiveLazers();
 }
 
@@ -33,6 +43,16 @@ void Game::Draw()
     for(auto& shield: shields)
     {
         shield.Draw();
+    }
+
+    for(auto& alien: aliens)
+    {
+        alien.Draw();
+    }
+
+    for(auto& lazer: alienLazers)
+    {
+        lazer.Draw();
     }
 }
 
@@ -67,6 +87,19 @@ void Game::DeleteInactiveLazers()
             ++i;
         }
     }
+
+    // Loop through vector to find inactive alien lazers
+    for(auto i = alienLazers.begin(); i != alienLazers.end();)
+    {
+        if(!i -> active)    // Removes lazer if it is inactive
+        {
+            i = alienLazers.erase(i);
+        }
+        else    // Move iterator to next element when lazer is active
+        {
+            ++i;
+        }
+    }
 }
 
 std::vector<Shield> Game::CreateShields()
@@ -79,4 +112,77 @@ std::vector<Shield> Game::CreateShields()
         shields.push_back(Shield({offsetX, float(GetScreenHeight() - 100)}));   // Draw 4 shields evenly spaced and above the ship
     }
     return shields;
+}
+
+std::vector<Alien> Game::CreateAliens()
+{
+    std::vector<Alien> aliens;
+    for(int row = 0; row < 5; row++)
+    {
+        for(int col = 0; col < 11; col ++)
+        {
+            int alienType;
+            if(row == 0)
+            {
+                alienType = 3;
+            }
+            else if(row == 1 || row == 2)
+            {
+                alienType = 2;
+            }
+            else
+            {
+                alienType = 1;
+            }
+
+            float x = 75 + col * 55; // Cell size for each alien is 55 x 55 pixels
+            float y = 110 + row * 55; // There are additional offsets added so aliens start centered
+            aliens.push_back(Alien(alienType, {x, y}));
+        }
+    }
+
+    return aliens;
+}
+
+void Game::MoveAliens()
+{
+    for(auto& alien: aliens)
+    {
+        if(alien.position.x + alien.alienImages[alien.type - 1].width > GetScreenWidth())   // Move aliens left if they hit right side of screen
+        {
+            aliensDirection = -1;
+            MoveDown(4);
+        }
+        if(alien.position.x < 0)    // Move aliens right if they hit left of screen
+        {
+            aliensDirection = 1;
+            MoveDown(4);
+        }
+        alien.Update(aliensDirection);
+    }
+}
+
+void Game::MoveDown(int distance)
+{
+    for(auto& alien: aliens)
+    {
+        alien.position.y += distance;
+    }
+}
+
+void Game::AlienShoot()
+{
+    double currentTime = GetTime();
+    if(currentTime - lastAlienFire >= alienLazerInterval && !aliens.empty())
+    {
+        int randomAlien = GetRandomValue(0, aliens.size()-1);
+        Alien& alien = aliens[randomAlien];
+
+        // Args for lazer are position and speed. This should be center of alien's x-axis and bottom of their y-axis
+        // The same calculations are used from the spaceship lazers which make this so confusing to look at
+        alienLazers.push_back(Lazer({alien.position.x + alien.alienImages[alien.type-1].width/2, 
+        alien.position.y + alien.alienImages[alien.type-1].height/2}, 7));
+
+        lastAlienFire = GetTime();
+    }
 }

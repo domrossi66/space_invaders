@@ -1,5 +1,5 @@
-# Space Invaders Game in C++
+# Space Invaders
 
-This is a personal project I am currently working on. It will use the raylib library in C++ to create a copy of the game Space Invaders.
+This is a copy of the game Space Invaders coded in C++. It uses the raylib library and starter files from Programming With Nick.
 
-_This readme will be updated upon completion of the project_
+_This is currently a work in progress. This will be updated with info on how to run when finished_
