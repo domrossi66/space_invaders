@@ -3,12 +3,7 @@
 
 Game::Game()
 {
-    shields = CreateShields();
-    aliens = CreateAliens();
-    aliensDirection = 1;
-    lastAlienFire = 0;
-    lastSpawn = 0.0;
-    alienShipSpawnInterval = GetRandomValue(10,20);
+    InitGame();
 }
 
 Game::~Game()
@@ -19,8 +14,9 @@ Game::~Game()
 
 void Game::Update()
 {
-
-    double currentTime = GetTime();
+    if(run)
+    {
+        double currentTime = GetTime();
     if(currentTime - lastSpawn > alienShipSpawnInterval)
     {
         alienship.Spawn();
@@ -42,6 +38,15 @@ void Game::Update()
     DeleteInactiveLazers();
     alienship.Update();
     CheckCollision();
+    }
+    else
+    {
+        if(IsKeyDown(KEY_ENTER))
+        {
+            Reset();
+            InitGame();
+        }
+    }
 }
 
 void Game::Draw()
@@ -74,17 +79,20 @@ void Game::Draw()
 // Makes key presses corespond to spaceship actions
 void Game::HandleInput()
 {
-    if(IsKeyDown(KEY_LEFT))
+    if(run)
     {
-        spaceship.MoveLeft();
-    }
-    else if(IsKeyDown(KEY_RIGHT))
-    {
-        spaceship.MoveRight();
-    }
-    else if(IsKeyDown(KEY_SPACE))
-    {
-        spaceship.Shoot();
+        if(IsKeyDown(KEY_LEFT))
+        {
+            spaceship.MoveLeft();
+        }
+        else if(IsKeyDown(KEY_RIGHT))
+        {
+            spaceship.MoveRight();
+        }
+        else if(IsKeyDown(KEY_SPACE))
+        {
+            spaceship.Shoot();
+        }
     }
 }
 
@@ -259,7 +267,11 @@ void Game::CheckCollision()
         if(CheckCollisionRecs(lazer.Hitbox(), spaceship.Hitbox()))
         {
             lazer.active = false;
-            std::cout << "Spaceship hit!" << std::endl;
+            lives --;
+            if(lives == 0)
+            {
+                GameOver();
+            }
         }
 
         // Alien lazers hitting shields 
@@ -303,7 +315,33 @@ void Game::CheckCollision()
         // Alien hitting spaceship
         if(CheckCollisionRecs(alien.Hitbox(), spaceship.Hitbox()))
         {
-            std::cout << "Spaceship hit! (by an alien)" << std::endl;
+            GameOver();
         }
     }
+}
+
+void Game::GameOver()
+{
+    run = false;
+}
+
+// Reset to inital positions/lives after game over
+void Game::InitGame()
+{
+    shields = CreateShields();
+    aliens = CreateAliens();
+    aliensDirection = 1;
+    lastAlienFire = 0;
+    lastSpawn = 0.0;
+    alienShipSpawnInterval = GetRandomValue(10,20);
+    lives = 3;
+    run = true;
+}
+
+void Game::Reset()
+{
+    spaceship.Reset();
+    aliens.clear();
+    alienLazers.clear();
+    shields.clear();
 }

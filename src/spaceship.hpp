@@ -11,6 +11,7 @@ class Spaceship
         void MoveLeft();
         void MoveRight();
         void Shoot();
+        void Reset();
         Rectangle Hitbox();
         std::vector<Lazer> lazers;
     private:

@@ -47,6 +47,13 @@ void Spaceship::Shoot()
     }
 }
 
+void Spaceship::Reset()
+{
+    position.x = (GetScreenWidth() - image.width)/ 2.0f;
+    position.y = GetScreenHeight() - image.height;
+    lazers.clear();
+}
+
 Rectangle Spaceship::Hitbox()
 {
     return {position.x, position.y, float(image.width), float(image.height)};
