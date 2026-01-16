@@ -13,6 +13,7 @@ class Game
         void Update();
         void HandleInput();
         bool run;
+        int lives;
     private:
         Spaceship spaceship;
         void DeleteInactiveLazers();
@@ -34,5 +35,4 @@ class Game
         AlienShip alienship;
         float alienShipSpawnInterval;
         float lastSpawn;
-        int lives;
 };
