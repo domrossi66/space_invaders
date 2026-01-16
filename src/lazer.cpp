@@ -33,7 +33,7 @@ void Lazer::Update()
     // Destroy lazer once offscreen to save memory
     if(active)
     {
-        if(position.y > GetScreenHeight() || position.y < 0)
+        if(position.y > GetScreenHeight() - 100 || position.y < 25)
         {
             active = false;
         }

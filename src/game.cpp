@@ -132,7 +132,7 @@ std::vector<Shield> Game::CreateShields()
     for(int i = 0; i < 4; i++)
     {
         float offsetX = (i + 1) * gap + i * shieldWidth;    // Horizontal position with equal spacing
-        shields.push_back(Shield({offsetX, float(GetScreenHeight() - 100)}));   // Draw 4 shields evenly spaced and above the ship
+        shields.push_back(Shield({offsetX, float(GetScreenHeight() - 200)}));   // Draw 4 shields evenly spaced and above the ship
     }
     return shields;
 }
@@ -171,12 +171,12 @@ void Game::MoveAliens()
 {
     for(auto& alien: aliens)
     {
-        if(alien.position.x + alien.alienImages[alien.type - 1].width > GetScreenWidth())   // Move aliens left if they hit right side of screen
+        if(alien.position.x + alien.alienImages[alien.type - 1].width > GetScreenWidth() - 25)   // Move aliens left if they hit right side of screen
         {
             aliensDirection = -1;
             MoveDown(4);
         }
-        if(alien.position.x < 0)    // Move aliens right if they hit left of screen
+        if(alien.position.x < 25)    // Move aliens right if they hit left of screen
         {
             aliensDirection = 1;
             MoveDown(4);

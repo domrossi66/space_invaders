@@ -18,12 +18,12 @@ void AlienShip::Spawn()
 
     if(startPosition == 0)
     {
-        position.x = 0;
+        position.x = 25;
         speed = 3;
     }
     else
     {
-        position.x = GetScreenWidth() - image.width;
+        position.x = GetScreenWidth() - image.width - 25;
         speed = -3;
     }
     visible = true;
@@ -46,7 +46,7 @@ void AlienShip::Update()
     if(visible)
     {
         position.x += speed;
-        if(position.x > GetScreenWidth() - image.width || position.x < 0)
+        if(position.x > GetScreenWidth() - image.width - 25 || position.x < 25)
         {
             visible = false;
         }
