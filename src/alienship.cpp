@@ -29,6 +29,18 @@ void AlienShip::Spawn()
     visible = true;
 }
 
+Rectangle AlienShip::Hitbox()
+{
+    if(visible)
+    {
+        return {position.x, position.y, float(image.width), float(image.height)};
+    }
+    else    // Make the hitbox non-existent when ship isn't on screen
+    {
+        return {position.x, position.y, 0, 0};
+    }
+}
+
 void AlienShip::Update()
 {
     if(visible)

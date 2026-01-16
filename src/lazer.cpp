@@ -16,6 +16,16 @@ void Lazer::Draw()
     }
 }
 
+Rectangle Lazer::Hitbox()
+{
+    Rectangle hitbox;
+    hitbox.x = position.x;
+    hitbox.y = position.y;
+    hitbox.width = 4;
+    hitbox.height = 15;
+    return hitbox;
+}
+
 void Lazer::Update()
 {
     position.y += speed;

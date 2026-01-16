@@ -41,6 +41,7 @@ void Game::Update()
     }
     DeleteInactiveLazers();
     alienship.Update();
+    CheckCollision();
 }
 
 void Game::Draw()
@@ -198,5 +199,111 @@ void Game::AlienShoot()
         alien.position.y + alien.alienImages[alien.type-1].height/2}, 7));
 
         lastAlienFire = GetTime();
+    }
+}
+
+void Game::CheckCollision()
+{
+    // ---- User Lazer Collisions----
+
+    // Lazers hitting aliens
+    for(auto& lazer: spaceship.lazers)
+    {
+        // Traverse through the aliens
+        auto i = aliens.begin();
+        while(i != aliens.end())
+        {
+            if(CheckCollisionRecs(i -> Hitbox(), lazer.Hitbox()))   // Check if the lazer hitbox collied with alien hitbox
+            {
+                i = aliens.erase(i);    // Kill alien if true
+                lazer.active = false;   // Stop lazer if true
+            }
+            else
+            {
+                ++i;    // Check next alien if there was no collision
+            }
+        }
+
+        // Lazers hitting shields 
+        for(auto& shield: shields)
+        {
+            auto i = shield.blocks.begin();
+            while(i != shield.blocks.end())
+            {
+                if(CheckCollisionRecs(i -> Hitbox(), lazer.Hitbox()))
+                {
+                    i = shield.blocks.erase(i);
+                    lazer.active = false;
+                }
+                else
+                {
+                    ++i;
+                }
+            }
+        }
+
+        // Lazers hitting alien ship
+        if(CheckCollisionRecs(alienship.Hitbox(), lazer.Hitbox()))
+        {
+            alienship.visible = false;
+            lazer.active = false;
+
+        }
+    }
+
+    // ---- Alien Collisons ----
+
+    // Alien lazers hitting spaceship
+    for(auto& lazer: alienLazers)
+    {
+        if(CheckCollisionRecs(lazer.Hitbox(), spaceship.Hitbox()))
+        {
+            lazer.active = false;
+            std::cout << "Spaceship hit!" << std::endl;
+        }
+
+        // Alien lazers hitting shields 
+        for(auto& shield: shields)
+        {
+            auto i = shield.blocks.begin();
+            while(i != shield.blocks.end())
+            {
+                if(CheckCollisionRecs(i -> Hitbox(), lazer.Hitbox()))
+                {
+                    i = shield.blocks.erase(i);
+                    lazer.active = false;
+                }
+                else
+                {
+                    ++i;
+                }
+            }
+        }
+    }
+
+    // Alien hitting shields
+    for(auto& alien: aliens)
+    {
+        for(auto& shield: shields)
+        {
+            auto i = shield.blocks.begin();
+            while(i != shield.blocks.end())
+            {
+                if(CheckCollisionRecs(i -> Hitbox(), alien.Hitbox()))
+                {
+                    i = shield.blocks.erase(i);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+
+        // Alien hitting spaceship
+        if(CheckCollisionRecs(alien.Hitbox(), spaceship.Hitbox()))
+        {
+            std::cout << "Spaceship hit! (by an alien)" << std::endl;
+        }
     }
 }

@@ -20,6 +20,7 @@ class Game
         void MoveAliens();
         void MoveDown(int distance);
         void AlienShoot();
+        void CheckCollision();
         std::vector<Shield> shields;
         std::vector<Alien> aliens;
         int aliensDirection;

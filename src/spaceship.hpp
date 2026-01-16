@@ -11,6 +11,7 @@ class Spaceship
         void MoveLeft();
         void MoveRight();
         void Shoot();
+        Rectangle Hitbox();
         std::vector<Lazer> lazers;
     private:
         Texture2D image;

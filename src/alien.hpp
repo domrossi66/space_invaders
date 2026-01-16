@@ -10,6 +10,7 @@ class Alien
         int GetType();
         static Texture2D alienImages[3];    // Load each alien image once and apply instead of 55 aliens with set images
         static void UnloadImages();
+        Rectangle Hitbox();
         int type;
         Vector2 position;
     private:

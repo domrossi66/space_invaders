@@ -7,6 +7,7 @@ class Lazer
         Lazer(Vector2 position, int speed);
         void Update();
         void Draw();
+        Rectangle Hitbox();
         bool active;
     private:
         Vector2 position;

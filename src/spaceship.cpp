@@ -46,3 +46,8 @@ void Spaceship::Shoot()
         lastFire = GetTime();
     }
 }
+
+Rectangle Spaceship::Hitbox()
+{
+    return {position.x, position.y, float(image.width), float(image.height)};
+}
