@@ -58,6 +58,11 @@ int main()
         std::string scoreText = FormatScore(game.score, 5);
         DrawTextEx(font, scoreText.c_str(), {55,45}, 34, 2, interface);
 
+        // Displaying highscore
+        DrawTextEx(font, "HIGHSCORE", {555, 15}, 34, 2, interface);
+        std::string highscoreText = FormatScore(game.highscore, 5);
+        DrawTextEx(font, highscoreText.c_str(), {555, 45}, 34, 2, interface);
+
         game.Draw();
         EndDrawing();
     }
