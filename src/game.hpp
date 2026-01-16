@@ -2,6 +2,7 @@
 #include "spaceship.hpp"
 #include "shield.hpp"
 #include "alien.hpp"
+#include "alienship.hpp"
 
 class Game
 {
@@ -25,5 +26,7 @@ class Game
         std::vector<Lazer> alienLazers;
         constexpr static float alienLazerInterval = 0.45;   // Alien lazers fire every 450 ms 
         float lastAlienFire;
-
+        AlienShip alienship;
+        float alienShipSpawnInterval;
+        float lastSpawn;
 };

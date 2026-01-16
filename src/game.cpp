@@ -7,6 +7,8 @@ Game::Game()
     aliens = CreateAliens();
     aliensDirection = 1;
     lastAlienFire = 0;
+    lastSpawn = 0.0;
+    alienShipSpawnInterval = GetRandomValue(10,20);
 }
 
 Game::~Game()
@@ -17,6 +19,15 @@ Game::~Game()
 
 void Game::Update()
 {
+
+    double currentTime = GetTime();
+    if(currentTime - lastSpawn > alienShipSpawnInterval)
+    {
+        alienship.Spawn();
+        lastSpawn = GetTime();
+        alienShipSpawnInterval = GetRandomValue(10,20);
+    }
+
     for(auto& lazer: spaceship.lazers)
     {
         lazer.Update();
@@ -29,6 +40,7 @@ void Game::Update()
         lazer.Update();
     }
     DeleteInactiveLazers();
+    alienship.Update();
 }
 
 void Game::Draw()
@@ -54,6 +66,8 @@ void Game::Draw()
     {
         lazer.Draw();
     }
+
+    alienship.Draw();
 }
 
 // Makes key presses corespond to spaceship actions
