@@ -18,6 +18,7 @@ int main()
     Color interface = {243, 216, 63, 255};   //This is yellow rn
 
     InitWindow(windowWidth + offset, windowHeight + 2 * offset, "Space Invaders Project");
+    InitAudioDevice();
 
     Font font = LoadFontEx("Font/mongram.ttf", 64, 0, 0);   // Font, pixel size, code point, code point count
     Texture2D spaceshipImage = LoadTexture("Graphics/spaceship.png");
@@ -28,6 +29,7 @@ int main()
 
     while(WindowShouldClose() == false)
     {
+        UpdateMusicStream(game.music);
         game.HandleInput();
         game.Update();
         BeginDrawing();
@@ -67,5 +69,6 @@ int main()
         EndDrawing();
     }
 
+    CloseAudioDevice();
     CloseWindow();
 }

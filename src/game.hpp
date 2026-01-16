@@ -16,6 +16,7 @@ class Game
         int lives;
         int score;
         int highscore;
+        Music music;
     private:
         Spaceship spaceship;
         void DeleteInactiveLazers();
@@ -40,4 +41,5 @@ class Game
         AlienShip alienship;
         float alienShipSpawnInterval;
         float lastSpawn;
+        Sound explosion;
 };

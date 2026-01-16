@@ -6,6 +6,7 @@ Spaceship::Spaceship()
     image = LoadTexture("Graphics/spaceship.png");
     position.x = (GetScreenWidth() - image.width)/2;
     position.y = GetScreenHeight() - image.height - 100;
+    pewpew = LoadSound("Sounds/lazer.ogg");
 
     lastFire = 0.0;
 }
@@ -13,6 +14,7 @@ Spaceship::Spaceship()
 Spaceship::~Spaceship()
 {
     UnloadTexture(image);
+    UnloadSound(pewpew);
 }
 
 void Spaceship::Draw()
@@ -44,6 +46,7 @@ void Spaceship::Shoot()
     {
         lazers.push_back(Lazer({position.x + image.width/2 - 2, position.y}, -5));  // Make it shoot from center
         lastFire = GetTime();
+        PlaySound(pewpew);
     }
 }
 
