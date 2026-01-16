@@ -1,5 +1,13 @@
 #include <raylib.h>
 #include "game.hpp"
+#include <string>
+
+std::string FormatScore(int number, int digits)
+{
+    std::string score = std::to_string(number); // Score becomes string for updating
+    int leadingZeros = digits - score.length(); // Determine how many leading zeros keep score at 5 digits
+    return score = std::string(leadingZeros, '0') + score; // Display the score
+}
 
 int main() 
 {
@@ -44,6 +52,11 @@ int main()
             DrawTextureV(spaceshipImage, {x, 745}, WHITE);
             x += 50;
         }
+
+        // Displaying score
+        DrawTextEx(font, "SCORE", {55, 15}, 34, 2, interface);
+        std::string scoreText = FormatScore(game.score, 5);
+        DrawTextEx(font, scoreText.c_str(), {55,45}, 34, 2, interface);
 
         game.Draw();
         EndDrawing();

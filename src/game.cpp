@@ -223,6 +223,19 @@ void Game::CheckCollision()
         {
             if(CheckCollisionRecs(i -> Hitbox(), lazer.Hitbox()))   // Check if the lazer hitbox collied with alien hitbox
             {
+                if(i -> type == 1)
+                {
+                    score += 100;
+                }
+                else if(i -> type == 2)
+                {
+                    score += 200;
+                }
+                else if(i -> type == 3)
+                {
+                    score += 300;
+                }
+
                 i = aliens.erase(i);    // Kill alien if true
                 lazer.active = false;   // Stop lazer if true
             }
@@ -255,7 +268,7 @@ void Game::CheckCollision()
         {
             alienship.visible = false;
             lazer.active = false;
-
+            score += 500;
         }
     }
 
@@ -336,6 +349,7 @@ void Game::InitGame()
     alienShipSpawnInterval = GetRandomValue(10,20);
     lives = 3;
     run = true;
+    score = 0;
 }
 
 void Game::Reset()
