@@ -4,17 +4,17 @@
 
 Game::Game()
 {
-    music = LoadMusicStream("Sounds/music.ogg");
-    explosion = LoadSound("Sounds/explosion.ogg");
-    PlayMusicStream(music);
+    //music = LoadMusicStream("Sounds/music.ogg");
+    //explosion = LoadSound("Sounds/explosion.ogg");
+    //PlayMusicStream(music);
     InitGame();
 }
 
 Game::~Game()
 {
     Alien::UnloadImages();
-    UnloadMusicStream(music);
-    UnloadSound(explosion);
+    //UnloadMusicStream(music);
+    //UnloadSound(explosion);
 
 }
 
@@ -229,7 +229,7 @@ void Game::CheckCollision()
         {
             if(CheckCollisionRecs(i -> Hitbox(), lazer.Hitbox()))   // Check if the lazer hitbox collied with alien hitbox
             {
-                PlaySound(explosion);
+                //PlaySound(explosion);
                 if(i -> type == 1)
                 {
                     score += 100;
@@ -278,7 +278,7 @@ void Game::CheckCollision()
             lazer.active = false;
             score += 500;
             CheckHighScore();
-            PlaySound(explosion);
+            //PlaySound(explosion);
         }
     }
 
@@ -289,7 +289,7 @@ void Game::CheckCollision()
     {
         if(CheckCollisionRecs(lazer.Hitbox(), spaceship.Hitbox()))
         {
-            PlaySound(explosion);
+            //PlaySound(explosion);
             lazer.active = false;
             lives --;
             if(lives == 0)

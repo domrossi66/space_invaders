@@ -69,7 +69,7 @@ int main()
     int windowHeight = 700;
 
     InitWindow(windowWidth + offset, windowHeight + 2 * offset, "Space Invaders Project");
-    InitAudioDevice();
+    //InitAudioDevice();
 
     font = LoadFontEx("Font/mongram.ttf", 64, 0, 0);   // Font, pixel size, code point, code point count
     spaceshipImage = LoadTexture("Graphics/spaceship.png");
@@ -88,6 +88,6 @@ int main()
 #endif
 
     delete game;
-    CloseAudioDevice();
+    //CloseAudioDevice();
     CloseWindow();
 }
