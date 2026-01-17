@@ -22,7 +22,7 @@ int main()
 
     Font font = LoadFontEx("Font/mongram.ttf", 64, 0, 0);   // Font, pixel size, code point, code point count
     Texture2D spaceshipImage = LoadTexture("Graphics/spaceship.png");
-     
+    
     SetTargetFPS(60);
 
     Game game;
